@@ -8,8 +8,8 @@ to view https://github.com/goodvibes2/IngAusOfxFixWin/blob/master/README.md.
 The last known IngAusOfxFix stable series is the 1.0x series.
 
 Please see:
-  ChangeLog.txt for release details
-  LICENSE.txt for GPLv3 license details
+  - ChangeLog.txt for release details
+  - LICENSE.txt for GPLv3 license details
 
 ## Table of Contents ##
 
@@ -29,7 +29,7 @@ Please see:
 
 IngAusOfxFix is an application to automate the repetitive task of editing
 the file of bank transactions downloaded in OFX format from bank ING Australia
-so that they may be imported to GnuCash.
+so that they may be imported into GnuCash.
 
 This application corrects 2 problems in the downloaded .ofx file:
   1. Add missing BANKACCTFROM xml entity before BANKTRANLIST.
@@ -65,11 +65,11 @@ but this has not (yet) been tested.
 - An easy-to-use interface.
 After downloading a .ofx file from the ING website, you just start IngAusOfxFix,
 select the saved bank account configuration using the Bank Account Name
-combobox, select different options if required (not usually required), select
-the downloaded .ofx file and click the Start button. IngAusOfxFix processes the
-input file and creates a new corrected file with the name of the original file
-but with the filename suffixed with 'New' before the .ofx extension.
-For example
+combobox, select any different options if required (such as the date range),
+select the downloaded .ofx file and click the Start button. IngAusOfxFix
+processes the input file and creates a new corrected file with the name of the
+original file but with the filename suffixed with 'New' before the .ofx
+extension. For example
 ```
   Original file: MyFile.ofx
   New file:      MyFileNew.ofx
@@ -124,12 +124,12 @@ problems as it checks that
      the correct GnuCash account the first time. It is possible, but fiddly, to
      correct if you get it wrong as it currently (GnuCash 2.6.13) involves
      either restoring your GnuCash data file, or manually editing it, or using
-     a perl script to edit it.
-    (see Bayes at http://wiki.gnucash.org/wiki/Published_tools)
+     a perl script to edit it (see Bayes at
+     http://wiki.gnucash.org/wiki/Published_tools).
 
   4. **Account Type**, as defined by the OFX specification:
      ```
-          "CHECKING", "CREDITLINE", "MONEYMRKT" or "SAVINGS"
+          CHECKING, CREDITLINE, MONEYMRKT or SAVINGS
      ```
 
   5. **OFX Directory**.
@@ -137,15 +137,10 @@ problems as it checks that
      account. This can either be typed in or selected using the **Browse**
      button.
 
-  After valid entry of
-    - account name
-    - account id
-    - account no
-    - account type
-    - OFX directory
-  the **Save Settings** button will be enabled, which when clicked,
-  will save the 5 above entries, and the name of the default bank account,
-  for all bank accounts, in file
+  After valid entry of account name, account id, account no, account type and
+  OFX directory, the **Save Settings** button will be enabled, which when
+  clicked, will save these entries, and the name of the default bank
+  account, for all bank accounts, in file
   ```
     GNU/Linux: /home/[USER_NAME]/.IngAusOfxFix/defaultProperties
     Windows: C:\Users\USER_NAME]\.IngAusOfxFix/defaultProperties
@@ -224,15 +219,15 @@ There are 2 ways to use this application
   ```
     https://github.com/goodvibes2/IngAusOfxFixWin
   ```
-    which is the project for Microsoft Windows using
-    Oracle Java 8, and netbeans IDE 8.0
+  which is the project for Microsoft Windows using
+  Oracle Java 8, and netbeans IDE 8.0
 
   AND
   ```
     https://github.com/goodvibes2/IngAusOfxFixLinux
   ```
-    which is the project for GNU/Linux Ubuntu 16.04 using
-    Java OpenJDK 8, OpenJFX, and netbeans IDE 8.1
+  which is the project for GNU/Linux Ubuntu 16.04 using
+  Java OpenJDK 8, OpenJFX, and netbeans IDE 8.1
 
 The java source files in both the above projects should be identical
 and the dist/IngAusOfxFix.jar files in both, being Java bytecode, should
