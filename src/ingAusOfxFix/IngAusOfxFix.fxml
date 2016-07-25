@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:id="grid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ingAusOfxFix.IngAusOfxFixController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="250.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="268.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="160.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="268.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="160.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <padding>
+      <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <children>
+       <Text fx:id="sceneTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="ING Australia OFX Fix" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+         <font>
+            <Font name="Tahoma" size="24.0" />
+         </font>
+       </Text>
+       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 1.00 18 Jul 2016" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
+         <font>
+            <Font size="12.0" />
+         </font>
+       </Text>
+       <Label fx:id="lblName" text="Bank Account Name" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <ComboBox fx:id="bankAcctComboBox" editable="true" onAction="#handleBankAcctComboBoxOnAction" prefHeight="25.0" prefWidth="500.0" promptText="Enter Bank Account Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <CheckBox fx:id="defaultChb" mnemonicParsing="false" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+       <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleBtnActionDelete" prefHeight="25.0" prefWidth="87.0" text="Delete" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+       <Label fx:id="lblBankId" text="Bank Id" GridPane.rowIndex="3">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtBankId" prefWidth="500.0" promptText="Enter Bank Id" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+       <Label fx:id="lblAcctNo" prefHeight="17.0" prefWidth="110.0" text="Account No" GridPane.rowIndex="4">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtAcctNo" promptText="Enter Account No" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+       <Label fx:id="lblType" text="Account Type" GridPane.rowIndex="5">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <ComboBox fx:id="bankAcctTypeComboBox" prefHeight="25.0" prefWidth="500.0" promptText="Enter Bank Account Type" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <Label fx:id="lblOfxDir" text="OFX Directory" GridPane.rowIndex="6">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtOfxDir" prefHeight="25.0" prefWidth="535.0" promptText="Enter OFX File Directory" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />      
+       <Button fx:id="btnChooseOfxDir" mnemonicParsing="false" onAction="#handleBtnActionChooseOfxDir" prefHeight="28.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="4" GridPane.rowIndex="6">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+       <Button fx:id="btnSaveSettings" mnemonicParsing="false" onAction="#handleBtnActionSaveSettings" prefHeight="25.0" prefWidth="200.0" text="Save Settings" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+       <Label fx:id="lblOfxFile" text="Input OFX File" GridPane.rowIndex="8">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtOfxFile" prefHeight="25.0" prefWidth="589.0" promptText="Enter Input OFX File" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+         <Button fx:id="btnChooseOfxFile" mnemonicParsing="false" onAction="#handleBtnActionChooseOfxFile" prefHeight="28.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="4" GridPane.rowIndex="8">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+       <Label fx:id="lblModDate" prefHeight="17.0" prefWidth="356.0" styleClass="labelNotBold" text="Modifed" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date From" textAlignment="RIGHT" GridPane.rowIndex="10">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtDateFrom" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date From YYYYMMDD" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date To" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="10">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextField fx:id="txtDateTo" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date To YYYYMMDD" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+         <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleBtnActionStart" prefHeight="25.0" prefWidth="200.0" text="Start" GridPane.columnIndex="1" GridPane.rowIndex="11">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Button>
+       <Label fx:id="lblLog" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Log" textAlignment="RIGHT" GridPane.rowIndex="12">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <TextArea fx:id="taLog" editable="false" prefHeight="225.0" prefWidth="718.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12" GridPane.rowSpan="8" />
+   </children>
+</GridPane>
