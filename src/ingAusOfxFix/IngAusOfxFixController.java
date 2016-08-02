@@ -17,6 +17,8 @@
 
 /* Date       Vers Comment
    18/07/2016 1.00 Created.
+   03/08/2016 1.01 Fix Missing carriage returns in BANKACCTFROM xml entity
+                    (doesn't matter to GnuCash either way).
 */
 
 package ingAusOfxFix;
@@ -851,11 +853,11 @@ public class IngAusOfxFixController implements Initializable {
         String dtPosted = "";
         String trnAmt = "";
         String fitId = "";
-        final String bankAcctFromElement = "<BANKACCTFROM>" +
-                "\n<BANKID>" + txtBankId.getText() +
-                "\n<ACCTID>" + txtAcctNo.getText() +
-                "\n<ACCTTYPE>" + bankAcctTypeComboBox.getValue().toString() +
-                "\n</BANKACCTFROM>\n";
+        final String bankAcctFromElement = "<BANKACCTFROM>" + LINE_SEPARATOR
+            + "<BANKID>" + txtBankId.getText() + LINE_SEPARATOR
+            + "<ACCTID>" + txtAcctNo.getText() + LINE_SEPARATOR
+            + "<ACCTTYPE>" + bankAcctTypeComboBox.getValue().toString() + LINE_SEPARATOR
+            + "</BANKACCTFROM>" + LINE_SEPARATOR;
         Integer transMod = 0;
         Integer transIn = 0;
         Integer transDrop = 0;

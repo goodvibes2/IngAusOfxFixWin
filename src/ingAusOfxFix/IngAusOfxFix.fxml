@@ -58,7 +58,7 @@
             <Font name="Tahoma" size="24.0" />
          </font>
        </Text>
-       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 1.00 18 Jul 2016" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
+       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 1.01 03 Aug 2016" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
          <font>
             <Font size="12.0" />
          </font>

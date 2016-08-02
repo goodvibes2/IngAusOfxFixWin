@@ -44,7 +44,7 @@ import javafx.stage.Stage;
  *      within each bank account and GnuCash will treat transactions with
  *      duplicate FITID's as already imported.
  *
- * Platform: Windows 7
+ * Platform: Windows or Linux
  * 
  * 30/04/2016 CRG Created
  * 
