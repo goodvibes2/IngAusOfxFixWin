@@ -1,4 +1,4 @@
-#          IngAusOfxFix V#1.00 21 Jul 2016 README.md file.
+#          IngAusOfxFix V#1.01 03 Aug 2016 README.md file.
 
 ING Australia OFX Fix for Windows (using JavaFX) or Linux (using OpenJFX)
 

@@ -9,7 +9,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IngAusOfxFix.jar" size="25211" download="eager" />
+    <jar href="IngAusOfxFix.jar" size="25661" download="eager" />
   </resources>
 <security>
   <all-permissions/>

@@ -15,12 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* Date       Vers Comment
-   18/07/2016 1.00 Created.
-   03/08/2016 1.01 Fix Missing carriage returns in BANKACCTFROM xml entity
-                    (doesn't matter to GnuCash either way).
-*/
-
 package ingAusOfxFix;
 
 import java.io.BufferedReader;
@@ -375,7 +369,7 @@ public class IngAusOfxFixController implements Initializable {
             //System.out.println("My Exception Class " + ex.getClass());
 
             if (ex.getClass().toString().equals("class java.io.FileNotFoundException")) {
-                System.out.println("getUserDefaults: " + ex.getMessage());
+//              System.out.println("getUserDefaults: " + ex.getMessage());
                 BankAcct.setDefaultBankAcct(baName);
                 BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType, baOfxDir);
                 bankAcctComboBoxData.add(baName);
