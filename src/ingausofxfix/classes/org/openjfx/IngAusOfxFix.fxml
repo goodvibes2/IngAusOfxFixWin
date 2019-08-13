@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="grid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ingAusOfxFix.IngAusOfxFixController">
+<GridPane fx:id="grid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.IngAusOfxFixController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="268.0" />
@@ -58,7 +58,7 @@
             <Font name="Tahoma" size="24.0" />
          </font>
        </Text>
-       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 1.01 03 Aug 2016" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
+       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 2.00 28 Jul 2019" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
          <font>
             <Font size="12.0" />
          </font>

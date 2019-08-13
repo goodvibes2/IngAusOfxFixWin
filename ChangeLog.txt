@@ -1,5 +1,9 @@
 IngAusOfxFix
 
+V# 2.00 28 Jul 2019 Chris Good
+
+    * Convert to Modular Java 11 project.
+
 V# 1.01 03 Aug 2016 Chris Good
 
     * Fix Missing carriage returns in BANKACCTFROM xml entity for Windows
