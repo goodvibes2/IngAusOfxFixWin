@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Chris Good
+ * Copyright (C) 2019 Chris Good
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ingAusOfxFix;
+package org.openjfx;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,8 +35,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.*;
+//import java.util.logging.Logger;
+//import java.lang.System.Logger;
+//import java.lang.System.Logger.Level;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
@@ -69,9 +72,11 @@ import javafx.util.Callback;
  *
  * @author cgood
  */
-public class IngAusOfxFixController implements Initializable {
 
-    /* class variables (static) */
+//public class IngAusOfxFixController {
+    
+public class IngAusOfxFixController  implements Initializable{
+        /* class variables (static) */
 
     @FXML private GridPane grid;
     @FXML private Text     sceneTitle;
@@ -1067,7 +1072,19 @@ public class IngAusOfxFixController implements Initializable {
         }
     }
 
-    @Override
+
+    
+    
+    
+//  public void initialize() {
+//      String javaVersion = System.getProperty("java.version");
+//      String javafxVersion = System.getProperty("javafx.version");
+//      label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
+//  }
+    
+    
+    
+//  @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        throw new UnsupportedOperationException("Not supported yet.");
 //        To change body of generated methods, choose Tools | Templates.
@@ -1249,4 +1266,7 @@ public class IngAusOfxFixController implements Initializable {
             enable_or_disable_buttons();
         }
     }
+    
+    
+    
 }

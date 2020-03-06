@@ -1,11 +1,16 @@
-#          IngAusOfxFix V#1.01 03 Aug 2016 README.md file.
+#          IngAusOfxFix V#2.00 28 Jul 2019 README.md file.
 
 ING Australia OFX Fix for Windows (using JavaFX) or Linux (using OpenJFX)
 
 This README.md is formatted for github markdown and is most easily read using a web browser
 to view https://github.com/goodvibes2/IngAusOfxFixWin/blob/master/README.md.
 
-The last known IngAusOfxFix stable series is the 1.0x series.
+The last known IngAusOfxFix stable series is
+
+|Java Version | IngAusOfxFix Stable Series  |
+|---          | ---                         |
+| 8           | 1.01                        |
+| 11          | 2.00                        |
 
 Please see:
   - ChangeLog.txt for release details
@@ -15,12 +20,14 @@ Please see:
 
   - [Overview](#Overview)
   - [Features](#Features)
+  - [Selecting IngAusOfxFix Version](#IngAusOfxFixVersion)
+  - [Selecting Precompiled IngAusOfxFix or Compile Yourself](#PreCompiledOrCompile)
   - [Dependencies](#Dependencies)
   - [Running](#Running)
   - [Internationalization](#Internationalization)
-  - [Building and Installing](#Building and Installing)
-  - [Supported Platforms](#Supported Platforms)
-  - [Known Issues](#Known Issues)
+  - [Building and Installing](#BuildingAndInstalling)
+  - [Supported Platforms](#SupportedPlatforms)
+  - [Known Issues](#KnownIssues)
 
 ![Image of IngAusOfxFix](https://github.com/goodvibes2/IngAusOfxFixWin/blob/master/IngAusOfxFix.PNG)
 
@@ -42,13 +49,13 @@ This application corrects 2 problems in the downloaded .ofx file:
      transaction within each bank account and GnuCash will treat
      transactions with duplicate FITID's as already imported.
 
-This application is written in Java version 8 using JavaFX (or OpenJFX) for
+This application is written in Java using JavaFX (or OpenJFX) for
 the graphical user interface. Java versions before 8 cannot be used with this
 application as they do not support JavaFX.
 
 The IngAusOfxFix project is _not_ part of the GnuCash project.
 
-If you need help, please email chris.good@ozemail.com.au and I will help
+If you need help, please email goodchris96@gmail.com and I will help
 if I can and have time available.
 Please read all of this document before asking for help.
 
@@ -58,7 +65,7 @@ Please read all of this document before asking for help.
 Features include
 
 - Available for both GNU/Linux and Microsoft Windows.
-IngAusOfxFix has been tested in GNU/Linux Ubuntu 16.04 and Windows 10.
+IngAusOfxFix has been tested in GNU/Linux Ubuntu 16.04 & 18.04 and Windows 10.
 GnuCash is also available for Mac OS/X and IngAusOfxFix may work
 but this has not (yet) been tested.
 
@@ -75,7 +82,7 @@ extension. For example
   New file:      MyFileNew.ofx
 ```
 Then just import the new file into GnuCash.
-  
+
 - Running this app on a file that has already been fixed will not cause any
 problems as it checks that
   1. the BANKACCTFROM xml entity is missing before adding
@@ -84,7 +91,7 @@ problems as it checks that
 
 - One-time setup (per bank account) of
   1. **Bank Account Name**.
-     
+
      The configuration details for up to 100 bank accounts may defined and
      saved, and they will be automatically loaded when this app starts.
 
@@ -174,100 +181,231 @@ problems as it checks that
 ### Home Page ###
 None
 
-### Precompiled binaries ###
+<a name="IngAusOfxFixVersion"></a>
+## Selecting IngAusOfxFix Version ##
 
-```
- https://github.com/goodvibes2/IngAusOfxFixWin/blob/master/dist/IngAusOfxFix.jar
- or
- https://github.com/goodvibes2/IngAusOfxFixLinux/blob/master/dist/IngAusOfxFix.jar
-```
-Being Java bytecode built from the same Java source files, either of the above
-should work in either GNU/Linux or Windows.
+IngAusOfxFix V1.x runs in Java 8.
 
-To download IngAusOfxFix.jar
+IngAusOfxFix V2.x runs in Java 11.
 
-Paste either of the above URL's into a web browser,
-**Right** click on the **Raw** button, **Save target as**,
-select the required location.
+IngAusOfxFix versions 1.x and 2.x have the same functionality. Currently (Sep
+2019), the only difference is the version of Java they run in. Note that as Java
+8 is no longer being developed, future IngAusOfxFix enhancements may not be
+included in V1.x.
 
-I suggest
-```
-GNU/Linux              /home/[USER_NAME]/IngAusOfxFix/IngAusOfxFix.jar
-Windows   C:\Users\[USER_NAME]\Documents\IngAusOfxFix\IngAusOfxFix.jar
-```
+**Definition**
 
-<a name="Dependencies"></a>
-## Dependencies ##
+**JRE**
+Java Runtime Environment. Simplified - All the files needed to run a Java
+program.
+
+If you already have a Java 8 JRE installed, you can run IngAusOfxFix V1.x.
+You should run IngAusOfxFix V2.x if you do not have a Java 8 JRE already
+installed.
+
+**Windows**: You can download and install a Java 8 JRE if you wish. A JRE is not
+included with Windows.
+
+**GNU/Linux**
+  You may wish to use the JRE that is available in the repositories
+  for the version of GNU/Linux you are using. For example:
+
+**Ubuntu 16.04 (or Mint 18)**
+  Only has Java 8 available so if you already have Java 8 installed, you can
+  save some disk space by using the latest IngAusOfxFix V1.x. You can still use
+  IngAusOfxFix V2.x or later if you wish.
+
+**Ubuntu 18.04 (or Mint 19)**
+  Has both Java 8 and Java 11 and you can set the system to use either 8 or 11.
+  If you have another application that requires Java 8 and you have limited
+  disk space, then you could use IngAusOfxFix V1.x, otherwise you should use
+  V2.x or later.
+
+<a name="DowngradeUbuntu18.04ToJava8"></a>
+## Downgrade Ubuntu 18.04 Java 11 to Java 8 ##
+
+If you already have a JRE installed, by default Ubuntu 18.04 will have updated
+it to Java 11. To set your Ubuntu 18.04 Java 11 system back to Java 8:
+  - Set the *java* command to Java 8
+  ```
+    sudo update-alternatives --config java
+  ```
+  and enter the line number for Java 8.
+  Check by running
+  ```
+    java -version
+  ```
+  - Downgrade the openjfx packages to Java 8
+  ```
+    sudo apt install openjfx=8u161-b12-1ubuntu2 \
+      libopenjfx-java=8u161-b12-1ubuntu2 \
+      libopenjfx-jni=8u161-b12-1ubuntu2
+  ```
+  - To stop the openjfx packages from being automatically updated to the latest
+  java 11 packages next update
+  ```
+    apt-mark hold openjfx libopenjfx-jni libopenjfx-java
+  ```
+  Note: holding packages at a particular release level may cause
+  incompatibilities with other packages so it is preferable not to do so.
+
+  To undo setting a Ubuntu 18.04 system to Java 8
+  - Set the *java* command to java 11
+  ```
+    sudo update-alternatives --config java
+  ```
+  and enter the line number for Java 11 (auto mode).
+  - Unhold the openjfx packages from being automatically updated to the
+  latest Java 11 packages next update
+  ```
+    apt-mark unhold openjfx libopenjfx-jni libopenjfx-java
+  ```
+  - Update the packages
+  ```
+    sudo apt-get update
+    sudo apt-get upgrade
+  ```
+
+<a name="PreCompiledOrCompile"></a>
+## Selecting to Use Precompiled IngAusOfxFix or Compile Yourself ##
 
 There are 2 ways to use this application
 
-  1. Download the prebuilt IngAusOfxFix.jar from this project
+  1. Use the Precompiled Binaries (programs) attached to this GitHub project -
+     Download the prebuilt IngAusOfxFix.jar (Java 8) or Runtime Image (Java
+     11).
 
-     This application comes with no warranty and you should think about the security
-     implications of using software downloaded from the internet. You are trusting
-     my good nature and the codebase from which this is built!
+     This application comes with no warranty and you should think about the
+     security implications of using software downloaded from the internet. You
+     are trusting my good nature and the codebase from which this is built!
      This code has not been security audited.
 
   OR
 
-  2. Download the project source from github, check the code for security and
-     build your own copy of IngAusOfxFix.jar.
+  2. Download the project source from GitHub, check the code for security and
+     build your own binary.
 
-### To download the prebuilt IngAusOfxFix.jar from github
+### Precompiled binaries ###
 
-**Note** There are 2 versions of IngAusOfxFix on github
-  ```
-    https://github.com/goodvibes2/IngAusOfxFixWin
-  ```
-  which is the project for Microsoft Windows using
-  Oracle Java 8, and netbeans IDE 8.0
+#### IngAusOfxFix V1.x for Java 8 ####
 
-  AND
-  ```
-    https://github.com/goodvibes2/IngAusOfxFixLinux
-  ```
-  which is the project for GNU/Linux Ubuntu 16.04 using
-  Java OpenJDK 8, OpenJFX, and netbeans IDE 8.1
+To run **IngAusOfxFix V1.x**, you need to have a Java 8 JRE already installed
+and you just need to download IngAusOfxFix.jar from GitHub.
 
-The java source files in both the above projects should be identical
-and the dist/IngAusOfxFix.jar files in both, being Java bytecode, should
-work in both GNU/Linux and Windows. The differences between these projects
-are only in the netbeans project files used for building the project.
-This is so as to make it easy to download (or clone) the project, set up the
-dependencies, and then be able to open the project in netbeans IDE, and
-build it without any further setup.
+**To download IngAusOfxFix.jar**
 
-Paste either of the following URL's into a web browser
+Copy and Paste one of the following URL's into a web browser
 ```
-https://github.com/goodvibes2/IngAusOfxFixWin/blob/master/dist/IngAusOfxFix.jar
- or
-https://github.com/goodvibes2/IngAusOfxFixLinux/blob/master/dist/IngAusOfxFix.jar
+  https://github.com/goodvibes2/IngAusOfxFixWin/releases
+  or
+  https://github.com/goodvibes2/IngAusOfxFixLinux/releases
 ```
-**Right** click on the **Raw** button, **Save target as**,
-  select the required location.
+
+IngAusOfxFix has been written so that the same source files will work in both
+GNU/Linux and Windows. Being Java bytecode built from the same Java source files,
+IngAusOfxFix.jar from either IngAusOfxFixWin or IngAusOfxFixLinux should work in
+both GNU/Linux and Windows.
+
+Find the latest V1.x Release, find the Assets section and click on
+IngAusOfxFix.jar to download it.
+
+Usually it downloads to your *Downloads* folder.
+Move the downloaded IngAusOfxFix.jar from your *Downloads* folder to a more
+appropriate folder.
 
 I suggest
 ```
-GNU/Linux   /home/[USER_NAME]/IngAusOfxFix/IngAusOfxFix.jar
-Windows     C:\Users\[USER_NAME]\Documents\IngAusOfxFix\IngAusOfxFix.jar
+GNU/Linux              /home/[USERNAME]/IngAusOfxFix/IngAusOfxFix.jar
+Windows   C:\Users\[USERNAME]\Documents\IngAusOfxFix\IngAusOfxFix.jar
 ```
 
-### Dependencies for using prebuilt backupGnuCash.jar ###
+#### IngAusOfxFix V2.x for Java 11 ####
 
-(See [Building and Installing](#Building and Installing) below if you wish to build from source)
+Java modular applications were introduced in Java 9. IngAusOfxFix V2.x is a
+modular Java 11 application.
+
+It is **not** possible to run a modular java app from a .jar file even if you
+have an appropriate JRE already installed.
+
+To run IngAusOfxFix V2.x, you do NOT need a Java Runtime Environment (JRE)
+already installed as the app is distributed as a Runtime Image which includes
+the required JRE and all the files needed.
+
+Disadvantages of a Java Runtime Image:
+  - Download is larger as it includes a JRE.
+  - Runtime Images work only on the platform (Windows or GNU/Linux in this case)
+  for which they are created.
+
+Advantages:
+  - Totally independent of any other installed JRE.
+
+**To download a IngAusOfxFix V2.x Runtime Image (includes a Java 11 JRE)**
+
+Copy and Paste one of the following URL's into a web browser depending on your
+target platform (Windows or Linux)
+```
+  https://github.com/goodvibes2/IngAusOfxFixWin/releases
+  or
+  https://github.com/goodvibes2/IngAusOfxFixLinux/releases
+```
+
+Find the latest V2.x Release, then find the Assets section. To download the
+Runtime Image archive, click on
+```
+GNU/Linux       IngAusOfxFix_rel2.nn.tar.gz
+Windows         IngAusOfxFix_rel2.nn.zip
+```
+where 2.nn is the required release.
+
+Usually a web browser downloads to your *Downloads* folder.
+Move the downloaded archive file from your *Downloads* folder to a more
+appropriate folder.
+
+I suggest the following folders
+```
+GNU/Linux              /home/[USERNAME]/IngAusOfxFix/v2.nn
+Windows   C:\Users\[USERNAME]\Documents\IngAusOfxFix\v2.nn
+```
+where 2.nn is the required release.
+
+Unpack the Runtime Image
+
+**GNU/Linux**
+```
+cd /home/[USERNAME]/IngAusOfxFix/v2.nn
+tar zxf IngAusOfxFix_rel2.nn.tar.gz
+```
+where 2.nn is the required release.
+
+**Windows**
+Use 7-Zip in a command prompt window to unpack all the files from the
+Runtime Image archive to the current directory
+```
+C:
+cd \Users\[USERNAME]\Documents\IngAusOfxFix\v2.nn
+"C:\Program Files\7-Zip\7z.exe" x IngAusOfxFix_rel2.nn.zip
+```
+where 2.nn is the required release.
+
+<a name="Dependencies"></a>
+## Dependencies ##
+
+### Dependencies for using prebuilt IngAusOfxFix.jar V1.x in Java 8 ###
+
+(See [Building and Installing](#BuildingAndInstalling) below if you wish to build from source)
 
 If you wish to download and use the prebuilt IngAusOfxFix.jar from
-this github project, the following packages are required to be installed
+this github project, the following packages need to be installed
 
 #### GNU/Linux ####
-These instructions are for Ubuntu 16.04 but should be similar for other
+These instructions are for Ubuntu 18.04 but should be similar for other
 Gnu/Linux flavours/versions.
 
 ##### Java #####
-IngAusOfxFix uses Java version 8 (or later) and JavaFX.
+IngAusOfxFix V1.x uses Java version 8 and JavaFX.
 These can be either the open **or** Oracle versions.
 
-See also [Known Issues](#Known Issues).
+See also [Known Issues](#KnownIssues).
 
 ###### Open Java ######
 Openjdk (http://openjdk.java.net)
@@ -276,8 +414,11 @@ installed). E.g
 ```
         sudo apt-get install openjfx
 ```
-Openjfx is available for Ubuntu from the wily (15.10) or xenial (16.04)
-**universe** repository, but not for previous Ubuntu versions.
+
+See [Downgrade Ubuntu 18.04 Java 11 to Java 8](#DowngradeUbuntu18.04ToJava8)
+
+Openjfx is available for Ubuntu from the wily (15.10), xenial (16.04) or
+bionic (18.04) **universe** repository, but not for previous Ubuntu versions.
 
 If openjfx is not available from your distribution's repositories, try
 https://wiki.openjdk.java.net/display/OpenJFX/Main
@@ -298,10 +439,28 @@ Prebuilt openjfx is not available (as far as I can tell as at 31 May 2016)
 for Windows, so use Oracle Java 8 (which includes JavaFX) from
 http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html.
 
-See also [Known Issues](#Known Issues).
+See also [Known Issues](#KnownIssues).
+
+### Dependencies for using prebuilt IngAusOfxFix V2.x Runtime Image (Java 11) ###
+
+(See [Building and Installing](#BuildingAndInstalling) below if you wish to
+build from source)
+
+If you wish to download and use the prebuilt IngAusOfxFix V2.x Runtime Image
+from this GitHub project, the following packages need to be installed
+
+#### GNU/Linux & Windows ####
+
+##### Java #####
+
+As the Prebuilt IngAusOfxFix Runtime Image V2.x includes a Java 11 RTE and
+openjfx, it is **not** neccessary to install java or openjfx separately.
+
 
 <a name="Running"></a>
 ## Running ##
+
+### Running IngAusOfxFix V1.x for Java 8 (IngAusOfxFix.jar) ###
 
 ### GNU/Linux ###
   To run the project from the command line, type the following
@@ -312,8 +471,8 @@ E.g.
 ```
     java -jar /home/[USER_NAME]/IngAusOfxFix/IngAusOfxFix.jar &
 ```
-**Ubuntu** To set up a IngAusOfxFix.desktop file so it can be started from the Unity
-Dash
+**Ubuntu** To set up an ingausofxfix.desktop file so it can be started from the
+Unity Dash
 
 create either (or both)
 ```
@@ -325,7 +484,7 @@ containing
 ```
 [Desktop Entry]
 Name=IngAusOfxFix
-Comment=Backup GnuCash
+Comment=ING Aus OFX Fix
 Exec=java -jar /home/[USER_NAME]/IngAusOfxFix/IngAusOfxFix.jar
 Icon=gnucash-icon
 Terminal=false
@@ -339,7 +498,7 @@ to ~/Desktop. Ensure it has execute permissions or you will get error
 **Untrusted Application Launcher**. E.g.
 ```
   cp /usr/share/applications/ingausofxfix.desktop ~/Desktop
-  chmod +x ~/Desktop
+  chmod +x ~/Desktop/ingausofxfix.desktop
 ```
 
 ### Windows ###
@@ -347,12 +506,73 @@ Create a shortcut on your desktop
 
 Right click on the desktop,
 New, Shortcut,
-Browse to and select your IngAusOfxFix.jar file
-or just type in the full filestring E.g
+Type in the full command
 ```
-C:\Users\[USER_NAME]\Documents\IngAusOfxFix\IngAusOfxFix.jar
+"C:\Program Files (x86)\Common Files\Oracle\Java\javapath\javaw.exe" -jar C:\Users\[USER_NAME]\Documents\IngAusOfxFix\IngAusOfxFix.jar
 ```
 Name the shortcut **IngAusOfxFix**.
+
+If you wish to see stdout or stderr for debugging, use **java.exe** instead of
+**javaw.exe** in the command above. Javaw.exe is intended for gui (window)
+applications (like IngAusOfxFix) and does not show a console window.
+
+### Running IngAusOfxFix V2.x for Java 11 (Runtime Image) ###
+
+#### GNU/Linux ####
+
+  To run the app from the command line, type the following
+```
+  ~/IngAusOfxFix/v2.nn/dist/jlink/IngAusOfxFixJ11/bin/IngAusOfxFix &
+```
+where 2.nn is the required release.
+E.g.
+```
+  ~/IngAusOfxFix/v2.00/dist/jlink/IngAusOfxFixJ11/bin/IngAusOfxFix &
+```
+**Ubuntu** To set up an ingausofxfix.desktop file so it can be started from the
+Unity Dash or *Gnome Applications overview*
+
+create either (or both)
+```
+/usr/share/applications/ingausofxfix.desktop
+or 
+/home/[USERNAME]/.local/share/applications/ingausofxfix.desktop
+```
+containing
+```
+[Desktop Entry]
+Name=IngAusOfxFix
+Comment=ING Aus OFX Fix
+Exec=/home/[UserName]/IngAusOfxFix/v2.nn/dist/jlink/IngAusOfxFixJ11/bin/IngAusOfxFix
+Icon=gnucash-icon
+Terminal=false
+Type=Application
+Categories=Office;Finance;
+```
+where 2.nn is the required release.
+
+You can also create a shortcut on your **Desktop** by copying ingausofxfix.desktop
+to ~/Desktop. Ensure it has execute permissions or you will get error
+**Untrusted Application Launcher**. E.g.
+```
+  cp /usr/share/applications/ingausofxfix.desktop ~/Desktop
+  chmod +x ~/Desktop/ingausofxfix.desktop
+```
+
+#### Windows ####
+
+Create a shortcut on your desktop
+
+Right click on the desktop,
+New, Shortcut,
+Browse to and select your IngAusOfxFix.bat file
+or just type in the full filestring E.g
+```
+C:\Users\[USERNAME]\Documents\IngAusOfxFix\v2.nn\dist\jlink\IngAusOfxFixJ11\bin\IngAusOfxFix.bat
+```
+where 2.nn is the required release.
+Name the shortcut **IngAusOfxFix**.
+
 
 <a name="Internationalization"></a>
 ## Internationalization ##
@@ -361,31 +581,73 @@ Name the shortcut **IngAusOfxFix**.
 IngAusOfxFix is currently English only.
 
 
-<a name="Building and Installing"></a>
+<a name="BuildingAndInstalling"></a>
 ## Building and Installing ##
 ---------------------
 
+There are 2 versions of IngAusOfxFix on GitHub
+- https://github.com/goodvibes2/IngAusOfxFixWin
+  which is the NetBeans IDE 8.2 project for Microsoft Windows using
+  Oracle Java 8 (Includes JavaFX) or Oracle Java 11 and Gluon JavaFX 11.0.2
+- https://github.com/goodvibes2/IngAusOfxFixLinux
+  which is the NetBeans IDE 8.1 project for GNU/Linux Ubuntu 18.04 using
+  Java OpenJDK 8 (and OpenJFX 8) or Oracle Java 11 and Gluon OpenJFX 11.0.2
+
+The java source files in both the above projects should be identical
+and the dist/IngAusOfxFix.jar files in both, being Java bytecode, should
+work in both GNU/Linux and Windows with a Java 8 JRE. The differences between
+these projects are only in the NetBeans project files used for building the
+project. This is so as to make it easy to download (or clone) the project, set up
+the dependencies, and then be able to open the project in NetBeans IDE, and build
+it without any further setup.
+
 ### **Note** This project was developed and tested using ###
+
+**IngAusOfxFix V1.x for Java 8**
 
 **GNU/Linux**
 ```
-      Ubuntu 16.04 xenial
-      openjdk version 1.8.0_91
-      openjfx 8u60-b27-4
-      SceneBuilder (Gluon) 8.2.0 
-      netbeans IDE 8.1
+      Ubuntu 18.04.2 bionic
+      openjdk version 1.8.0_191
+      openjfx 8u161-b12-1ubuntu2
+      SceneBuilder (Gluon) 8.2.0
+      NetBeans IDE 8.1
 ```
 **Windows**
 ```
       Windows 10 64-bit
-      Oracle 8 jdk (1.8.0_92) which includes JavaFX
-      SceneBuilder (Oracle) 2.0
-      netbeans IDE 8.1
+      Oracle 8 jdk (1.8.0_191) which includes JavaFX
+      SceneBuilder (Gluon) 8.5.0
+      NetBeans IDE 8.2
 ```
-If you wish to build the IngAusOfxFix.jar from source, you'll need
+
+**IngAusOfxFix V2.x for Java 11**
+
+**GNU/Linux**
+```
+      Ubuntu 18.04.2 bionic
+      Oracle jdk 11.0.4
+      Gluon openjfx 11.0.2
+      Gluon jfx jmods 11.0.2
+      SceneBuilder (Gluon) 8.2.0
+      Apache NetBeans IDE 11.0
+```
+**Windows**
+
+```
+      Windows 10 64-bit
+      Oracle jdk (11.0.4)
+      Gluon openjfx 11.0.2
+      Gluon JavaFX jmods 11.0.2
+      SceneBuilder (Gluon) 8.5.0
+      Apache NetBeans IDE 11.0
+```
+
+### Build the V1.x IngAusOfxFix.jar from source ###
+You will need
 
 ### GNU/Linux ###
-**Note** These instructions are for Ubuntu 16.04 but should be similar for other
+**Note** These instructions are for Ubuntu 18.04 but should be similar for other
 Gnu/Linux flavours/versions.
 
 #### Java ####
@@ -397,12 +659,17 @@ You'll need the Java Development Kit (jdk) and OpenJFX. E.g.
 ```
 sudo apt-get install openjdk-8-jdk openjfx
 ```
+
+Ubuntu 18.04 includes Java 8 and Java 11.
+IngAusOfxFix V1.x needs Java 8, so set the default Java version to 8. See
+[Downgrade Ubuntu 18.04 Java 11 to Java 8](#DowngradeUbuntu18.04ToJava8)
+
 OR
 ##### Oracle Java 8 jdk (includes JavaFX) #####
 Download and install Oracle Java SE 8 Development Kit from
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html.
 
-**Note** You can download a package which includes both the netbeans IDE and
+**Note** You can download a package which includes both the NetBeans IDE and
 the jdk from http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html.
 
 #### SceneBuilder ####
@@ -422,9 +689,9 @@ Install
 ```
 sudo dpkg -i scenebuilder-8.2.0_x64_64.deb
 ```
-#### Netbeans IDE
-If you haven't already installed netbeans as part of the Oracle combined
-jdk and netbeans
+#### NetBeans IDE
+If you haven't already installed NetBeans as part of the Oracle combined
+jdk and NetBeans
 ```
 sudo apt-get install netbeans
 ```
@@ -432,14 +699,14 @@ sudo apt-get install netbeans
 ### Windows ###
 
 #### Java ####
-IngAusOfxFix uses Java version 8 and JavaFX.
+IngAusOfxFix V1.x uses Java version 8 and JavaFX.
     Openjdk and OpenJFX are NOT available for Windows, so use Oracle versions.
 
 ##### Oracle Java 8 jdk (includes JavaFX) #####
 Download and install Oracle Java SE 8 Development Kit from
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html.
 
-**Note** You can download a package which includes both the netbeans IDE and
+**Note** You can download a package which includes both the NetBeans IDE and
 the jdk from http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html.
 
 #### SceneBuilder ####
@@ -452,38 +719,204 @@ SceneBuilder is no longer available from Oracle.
 
 Download from http://gluonhq.com/open-source/scene-builder.
 
-#### Netbeans IDE ####
-If you haven't already installed netbeans as part of an Oracle combined
-jdk and netbeans
+#### NetBeans IDE ####
+If you haven't already installed NetBeans as part of an Oracle combined
+jdk and NetBeans
 
 Download and install from https://netbeans.org/downloads/.
 
-#### To download the source files and netbeans project ####
+### Build the V2.x Runtime Image from source ###
 
-**Note** There are 2 versions of IngAusOfxFix on github
+Follow the instructions at https://openjfx.io/openjfx-docs/#introduction
+including the instructions for using JavaFX and NetBeans to build a
+Modular app from the IDE (NetBeans).
+
+**Note** The instructions on the above webpage are for Java 12 but IngAusOfxFix
+V2.x was built for Java 11 as that was the version available in the Ubuntu 18.04
+repositories. Substitute Java 11 for Java 12 in the above webpage instructions.
+
+As a Modular Java 11 app is run from a Runtime Image (which includes its
+own JRE), and the Ubuntu jdk 11.0.4 is broken when used for a JavaFX Modular
+app (so we need to use the Oracle jdk), the Ubuntu jdk is actually irrelevant,
+and this app could probably have been built using Java 12 (or later).
+
+You will need
+
+#### GNU/Linux ####
+**Note** These instructions are for Ubuntu 18.04 but should be similar for other
+GNU/Linux flavours/versions.
+
+##### Java JDK #####
+IngAusOfxFix V2.x uses Oracle Java jdk version 11
+
+Download jdk-11.0.4_linux-x64_bin.tar.gz from Oracle http://jdk.java.net/11/.
+The .gz contains base directory jdk-11.0.4.
+
+Extract (assuming the download is in ~/Downloads)
 ```
-https://github.com/goodvibes2/IngAusOfxFixWin
+  cd $HOME
+  mkdir java
+  cd java
+  tar zxf ~/Downloads/jdk-11.0.4_linux-x64_bin.tar.gz
 ```
-which is the project for Microsoft Windows using
-Oracle Java 8, and netbeans IDE 8.0
-    and
+This will create $HOME/java/jdk-11.0.4/...
+
+###### openjfx ######
+Download JavaFX Linux SDK (openjfx-11.0.2_linux-x64_bin-sdk.zip)
+from https://gluonhq.com/products/javafx/. The .zip contains base directory
+javafx-sdk-11.0.2.
+
+Extract (assuming download is in ~/Downloads)
 ```
-https://github.com/goodvibes2/IngAusOfxFixLinux
+cd $HOME/java
+unzip ~/Downloads/openjfx-11.0.2_linux-x64_bin-sdk.zip
 ```
-which is the project for GNU/Linux Ubuntu 16.04 using
-Java OpenJDK 8, OpenJFX, and netbeans IDE 8.1.
+This will create $HOME/java/javafx-sdk-11.0.2/...
+
+##### jfx jmods #####
+Download JavaFX Linux jmods (openjfx-11.0.2_linux-x64_bin-jmods.zip)
+from https://gluonhq.com/products/javafx/. The .zip contains base directory
+javafx-jmods-11.0.2.
+
+Extract (assuming download is in ~/Downloads)
+```
+cd $HOME/java
+unzip ~/Downloads/openjfx-11.0.2_linux-x64_bin-jmods.zip
+```
+This will create $HOME/java/javafx-jmods-11.0.2/...
+
+##### SceneBuilder #####
+SceneBuilder is the gui tool for modifying the user interface, details
+of which are held in IngAusOfxFix.fxml.
+You only need to install SceneBuilder if you wish to modify the user
+interface.
+
+SceneBuilder is NOT available in Ubuntu repositories, and is no longer
+    available from Oracle.
+
+Download the .deb from http://gluonhq.com/open-source/scene-builder
+
+E.g. Linux 64 bit: scenebuilder-8.2.0_x64_64.deb
+
+Install
+```
+sudo dpkg -i scenebuilder-8.2.0_x64_64.deb
+```
+
+##### NetBeans IDE #####
+Ubuntu 18.04 repositories contains NetBeans 10.0 but we need Apache NetBeans 11.
+```
+cd ~/java
+wget https://www-us.apache.org/dist/incubator/netbeans/incubating-netbeans/incubating-11.0/incubating-netbeans-11.0-bin.zip
+unzip incubating-netbeans-11.0-bin.zip
+sudo mv netbeans/ /opt/
+```
+The script to run NetBeans is /opt/netbeans/bin/netbeans
+
+Create NetBeans Desktop Launcher
+```
+  sudo nano /usr/share/applications/netbeans11.desktop
+```
+with contents
+```
+[Desktop Entry]
+Name=NetBeans 11 IDE
+Comment=NetBeans 11 IDE
+Type=Application
+Encoding=UTF-8
+Exec=/opt/netbeans/bin/netbeans
+Icon=/opt/netbeans/nb/netbeans.png
+Categories=GNOME;Application;Development;
+Terminal=false
+StartupNotify=true
+```
+
+#### Windows ####
+
+##### Java #####
+IngAusOfxFix V2.x uses Java JDK version 11 and openjfx.
+
+###### Oracle Java JDK 11 ######
+Openjdk 11 is only available from Oracle. You will need a free Oracle account
+to download the JDK.
+
+Download Oracle Java SE 11.0.4 Java Development Kit
+(jdk-11.0.4_windows-x64_bin.exe) from
+https://www.oracle.com/technetwork/java/javase/downloads/index.html.
+
+Double click on the downloaded .exe to install (by default) to
+C:\Program Files\Java\jdk-11.04.
+
+###### Openjfx ######
+Download JavaFX Windows SDK (openjfx-11.0.2_windows-x64_bin-sdk.zip)
+from https://gluonhq.com/products/javafx.
+The .zip contains base directory javafx-sdk-11.0.2.
+
+Use 7-Zip in a command prompt window to unpack all the files from the zip
+archive to the current directory
+```
+C:
+cd "\Program Files\Java"
+"C:\Program Files\7-Zip\7z.exe" x openjfx-11.0.2_windows-x64_bin-sdk.zip
+```
+This will create C:\Program Files\Java\javafx-sdk-11.0.2\\...
+
+###### jfx jmods ######
+Download JavaFX Windows jmods (openjfx-11.0.2_windows-x64_bin-jmods.zip)
+from https://gluonhq.com/products/javafx
+The .zip contains base directory javafx-jmods-11.0.2.
+
+Use 7-Zip in a command prompt window to unpack all the files from the zip
+archive to the current directory
+```
+C:
+cd "\Program Files\Java"
+"C:\Program Files\7-Zip\7z.exe" x openjfx-11.0.2_windows-x64_bin-jmods.zip
+```
+This will create C:\Program Files\Java\javafx-jmods-11.0.2\\...
+
+##### SceneBuilder #####
+SceneBuilder is the gui tool for modifying the user interface, details
+of which are held in IngAusOfxFix.fxml.
+You only need to install SceneBuilder if you wish to modify the user
+interface.
+
+SceneBuilder is no longer available from Oracle.
+
+Download from http://gluonhq.com/open-source/scene-builder.
+
+##### NetBeans IDE #####
+Download NetBeans 11.0 LTS Binary (incubating-netbeans-11.0-bin.zip)
+from https://netbeans.apache.org/download/. The zip archive files all start with
+folder *netbeans*.
+
+As you may have permissions problems extracting directly to C:\Program Files,
+extract to your Downloads folder, then use File Explorer to create folder
+C:\Program Files\Netbeans11.0 and move the extracted *netbeans* folder to
+C:\Program Files\Netbeans11.0.
+
+Create a desktop shortcut pointing to
+  C:\Program Files\Netbeans11.0\netbeans\bin\netbeans64.exe
+
+#### To download the source files and NetBeans project ####
+
+There are 2 versions of IngAusOfxFix on github
+- https://github.com/goodvibes2/IngAusOfxFixWin
+  which is the project for Microsoft Windows
+- https://github.com/goodvibes2/IngAusOfxFixLinux
+  which is the project for GNU/Linux
 
 The java source files in both the above projects should be identical
 and the dist/IngAusOfxFix.jar files in both should work in both GNU/Linux
-or Windows. The differences between these projects are only in the netbeans
+or Windows. The differences between these projects are only in the NetBeans
 project files used for building the project. This is so as to make it easy
 to download (or clone) the project, set up the dependencies, and then be
-able to open the project in netbeans, and be able to build it without any
+able to open the project in NetBeans, and be able to build it without any
 further setup.
 
-There are 2 main ways to download the IngAusOfxFix netbeans project from github
+There are 2 main ways to download the IngAusOfxFix NetBeans project from github
 
-1) If you already have a github account and git installed, you can clone
+1) **Clone** (if you already have a github account and git installed)
 
    **GNU/Linux** At the command line
    ```
@@ -499,43 +932,104 @@ There are 2 main ways to download the IngAusOfxFix netbeans project from github
       cd NetBeansProjects
       git clone https://github.com/goodvibes2/IngAusOfxFixWin IngAusOfxFix
    ```
+
+##### IngAusOfxFix V1.x Java 8 Extra Task #####
+   As the master branch has now been updated to Java 11, you need to reset back to
+   the last commit before Java 11 was merged into master. To create a new branch
+   (called say java8)
+   ```
+     cd IngAusOfxFix
+   GNU/Linux:
+     git checkout -b java8 85ba487d6cba6fda081dbaf2fb154273332b3215
+   Windows:
+     git checkout -b java8 27495fbb59774ca56f73849148f9e7a35b585425
+   ```
+
 OR
 
-2) Open the required Linux or Windows URL from above in a web browser,
-click on the green **Clone or download** button,
-click on **Download ZIP**.
-Extract all files from the zip, retaining directories, to
+2) **Download the source code archive for the required release**
+
+   Copy and Paste one of the following URL's into a web browser depending on your
+   target platform (Windows or Linux)
+   ```
+     https://github.com/goodvibes2/IngAusOfxFixWin/releases
+    or
+     https://github.com/goodvibes2/IngAusOfxFixLinux/releases
+   ```
+
+   Find the latest V1.x or V2.x Release as required, then find the Assets section.
+   Click on
+   ```
+   GNU/Linux       Source code (tar.gz)
+   Windows         Source code (zip)
+   ```
+   This will download source code archive file
+   ```
+   GNU/Linux       IngAusOfxFixLinux-v.nn.tar.gz
+   Windows         IngAusOfxFixWin-v.nn.zip
+   ```
+   where v.nn is the required release.
+
+   Usually a web browser downloads to your *Downloads* folder.
+   Move the downloaded archive file from your *Downloads* folder to a more
+   appropriate folder.
+
+   I suggest the following folders
+   ```
+     GNU/Linux              /home/[USERNAME]/NetBeansProjects
+     Windows   C:\Users\[USERNAME]\Documents\NetBeansProjects
+   ```
+
+   Unpack the source code and project files
+
+   **GNU/Linux**
+   ```
+     cd /home/[USERNAME]/NetBeansProjects
+     tar zxf IngAusOfxFixLinux-v.nn.tar.gz
+   ```
+   where v.nn is the required release.
+
+   **Windows**
+   Use 7-Zip in a command prompt window to unpack all the files from the
+   source code archive to the current directory
+   ```
+   C:
+   cd \Users\[USERNAME]\Documents\NetBeansProjects
+   "C:\Program Files\7-Zip\7z.exe" x IngAusOfxFixWin-v.n.n.zip
+   ```
+   where v.nn is the required release.
+
+After extracting, before you open the project in NetBeans, you should edit the
+following files to ensure the paths match your project
 ```
-  C:\Users\[USER_NAME]\Documents\NetBeansProjects
+  build.xml
+  nbproject/private/private.properties
+  nbproject/build-impl.xml
+  nbproject/project.properties
+  nbproject/project.xml
 ```
-I suggest after extracting, rename folder
-```
-  C:\Users\[USER_NAME]\Documents\NetBeansProjects\IngAusOfxFixWin-master
-  to
-  C:\Users\[USER_NAME]\Documents\NetBeansProjects\IngAusOfxFix
-```
-    
-<a name="Supported Platforms"></a>
+
+<a name="SupportedPlatforms"></a>
 ## Supported Platforms ##
 
-IngAusOfxFix 1.1x is known to work with the following operating systems
+IngAusOfxFix is known to work with the following operating systems
 
 - GNU/Linux             -- x86
 - Windows               -- x86
 
-IngAusOfxFix can probably be made to work on any platform for which GnuCash
-does, so long as Java 8 (open or Oracle) and JavaFX or openJFX are available.
+IngAusOfxFix can probably be made to work on any platform where GnuCash
+does, so long as the [Dependencies](#Dependencies) are available.
 
-<a name="Known Issues"></a>
+<a name="KnownIssues"></a>
 ## Known Issues ##
 
 1) Java 1.8.0_72 (8u72) or later is required due to bug
    https://bugs.openjdk.java.net/browse/JDK-8136838 as the value of
    ComboBox.getValue() was not correct in previous versions.
 
-   As of 15 Jul 2016, the current Java version on Windows is 1.8.0_92 and
-   on Ubuntu 16.04 is 1.8.0_91. 
-   Ubuntu 16.04 openjfx is version 8u60-b27-4 which works so long as when 
+   As of 14 Sep 2019, the current Java version on Windows is 1.8.0_221,
+   Ubuntu 16.04 is 1.8.0_222 and Ubuntu 18.04 is 1.8.0_222.
+   Ubuntu 16.04 openjfx is version 8u60-b27-4 which works so long as when
    adding a new bank account, ENTER is pressed after typing a new bank account
    name into the Bank Account combobox. I.e. Press ENTER before leaving the
    combobox.
