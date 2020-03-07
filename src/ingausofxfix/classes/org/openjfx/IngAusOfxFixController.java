@@ -822,7 +822,7 @@ public class IngAusOfxFixController  implements Initializable{
         <BANKTRANLIST>
         <STMTTRN>                                   Start of 1st Transaction
         <TRNTYPE>CREDIT
-//////////        <DTPOSTED>20160630000000
+        <DTPOSTED>20160630000000
         <TRNAMT>5.23
         <FITID>903889                                       MUST BE UNIQUE
         <MEMO>Bonus Interest Credit - Receipt 903889
@@ -952,6 +952,8 @@ public class IngAusOfxFixController  implements Initializable{
                                         if (!boolTrnDateInRange) {
                                             continue;
                                         }
+                                        // Change bad tag <BR/> to a space
+                                        line = line.replaceAll("<BR/>", " ");
                                     } else {
                                         if (line.startsWith("</STMTTRN>")) {
                                             boolInTransaction = false;
