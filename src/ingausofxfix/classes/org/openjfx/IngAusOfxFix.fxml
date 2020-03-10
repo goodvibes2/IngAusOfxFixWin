@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="grid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.IngAusOfxFixController">
+<GridPane fx:id="grid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.IngAusOfxFixController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="268.0" />
@@ -58,7 +52,7 @@
             <Font name="Tahoma" size="24.0" />
          </font>
        </Text>
-       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 2.00 28 Jul 2019" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
+       <Text fx:id="versionNo" strokeType="OUTSIDE" strokeWidth="0.0" text="V# 2.01 10 Mar 2020" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
          <font>
             <Font size="12.0" />
          </font>
@@ -105,43 +99,53 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-       <Button fx:id="btnSaveSettings" mnemonicParsing="false" onAction="#handleBtnActionSaveSettings" prefHeight="25.0" prefWidth="200.0" text="Save Settings" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+      <Label fx:id="lblSplitMemo" text="Split Memo" GridPane.rowIndex="7">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="splitMemoChb" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="7">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="btnSaveSettings" mnemonicParsing="false" onAction="#handleBtnActionSaveSettings" prefHeight="25.0" prefWidth="200.0" text="Save Settings" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
          <font>
             <Font size="14.0" />
          </font></Button>
-       <Label fx:id="lblOfxFile" text="Input OFX File" GridPane.rowIndex="8">
+       <Label fx:id="lblOfxFile" text="Input OFX File" GridPane.rowIndex="9">
          <font>
             <Font size="14.0" />
          </font>
        </Label>
-       <TextField fx:id="txtOfxFile" prefHeight="25.0" prefWidth="589.0" promptText="Enter Input OFX File" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
-         <Button fx:id="btnChooseOfxFile" mnemonicParsing="false" onAction="#handleBtnActionChooseOfxFile" prefHeight="28.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="4" GridPane.rowIndex="8">
+       <TextField fx:id="txtOfxFile" prefHeight="25.0" prefWidth="589.0" promptText="Enter Input OFX File" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+         <Button fx:id="btnChooseOfxFile" mnemonicParsing="false" onAction="#handleBtnActionChooseOfxFile" prefHeight="28.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="4" GridPane.rowIndex="9">
          <font>
             <Font size="14.0" />
          </font></Button>
-       <Label fx:id="lblModDate" prefHeight="17.0" prefWidth="356.0" styleClass="labelNotBold" text="Modifed" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date From" textAlignment="RIGHT" GridPane.rowIndex="10">
+       <Label fx:id="lblModDate" prefHeight="17.0" prefWidth="356.0" styleClass="labelNotBold" text="Modifed" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date From" textAlignment="RIGHT" GridPane.rowIndex="11">
          <font>
             <Font size="14.0" />
          </font>
        </Label>
-       <TextField fx:id="txtDateFrom" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date From YYYYMMDD" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date To" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="10">
+       <TextField fx:id="txtDateFrom" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date From YYYYMMDD" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Date To" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="11">
          <font>
             <Font size="14.0" />
          </font>
        </Label>
-       <TextField fx:id="txtDateTo" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date To YYYYMMDD" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-         <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleBtnActionStart" prefHeight="25.0" prefWidth="200.0" text="Start" GridPane.columnIndex="1" GridPane.rowIndex="11">
+       <TextField fx:id="txtDateTo" prefHeight="25.0" prefWidth="589.0" promptText="Enter Date To YYYYMMDD" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+         <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleBtnActionStart" prefHeight="25.0" prefWidth="200.0" text="Start" GridPane.columnIndex="1" GridPane.rowIndex="12">
          <font>
             <Font size="14.0" />
          </font>
        </Button>
-       <Label fx:id="lblLog" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Log" textAlignment="RIGHT" GridPane.rowIndex="12">
+       <Label fx:id="lblLog" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="163.0" text="Log" textAlignment="RIGHT" GridPane.rowIndex="13">
          <font>
             <Font size="14.0" />
          </font>
        </Label>
-       <TextArea fx:id="taLog" editable="false" prefHeight="225.0" prefWidth="718.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12" GridPane.rowSpan="8" />
+       <TextArea fx:id="taLog" editable="false" prefHeight="225.0" prefWidth="718.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13" GridPane.rowSpan="7" />
    </children>
 </GridPane>

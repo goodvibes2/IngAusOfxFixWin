@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.Collator;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -94,6 +95,8 @@ public class IngAusOfxFixController  implements Initializable{
     @FXML private Label     lblOfxDir;
     @FXML private TextField txtOfxDir;
     @FXML private Button    btnChooseOfxDir;
+    @FXML private Label     lblSplitMemo;
+    @FXML private CheckBox  splitMemoChb;
     @FXML private Button    btnSaveSettings;
     @FXML private Label     lblOfxFile;
     @FXML private TextField txtOfxFile;
@@ -128,6 +131,7 @@ public class IngAusOfxFixController  implements Initializable{
     private static String baType = "SAVINGS";           // initial default Account Type SAVINGS, CHECKING
     private static String baOfxDir = HOME_DIR + FILE_SEPARATOR + "ofx"; // initial default Ofx Directory
     private static final String baOfxFile = "MyOfxFile.ofx";  // initial default Ofx filename
+    private static boolean baSplitMemo = true;          // initial default SplitMemo
 
     private static Path pathOfxDirFilStr;
     private final Charset CHAR_SET = Charset.forName("US-ASCII");
@@ -139,6 +143,7 @@ public class IngAusOfxFixController  implements Initializable{
     private static final String ACCTNO_PROP = "bankAcctNo.";
     private static final String ACCTTYPE_PROP = "bankAcctType.";
     private static final String OFXDIR_PROP = "bankAcctOfxDir.";
+    private static final String SPLITMEMO_PROP = "splitMemo.";
 
     private static final String DEF_PROP = HOME_DIR + FILE_SEPARATOR
             + ".IngAusOfxFix" + FILE_SEPARATOR + "defaultProperties";
@@ -165,16 +170,41 @@ public class IngAusOfxFixController  implements Initializable{
         // Note: The deleteBtn is disabled when on the default bankAcct as
         //  this user interface does not permit deleting the default bankAcct
 
-        String tmpBook = (String) bankAcctComboBox.getValue();
-        if (((tmpBook != null) &&  (! tmpBook.isEmpty()))) {
+        String tmpBankAcctName = (String) bankAcctComboBox.getValue();
+        if (((tmpBankAcctName != null) &&  (! tmpBankAcctName.isEmpty()))) {
             if (bankAcctMap.size() > 1) {
-                bankAcctMap.remove(tmpBook);
-                bankAcctComboBoxData.remove(tmpBook);
+                bankAcctMap.remove(tmpBankAcctName);
+                bankAcctComboBoxData.remove(tmpBankAcctName);
                 bankAcctComboBox.setValue(BankAcct.getDefaultBankAcct());
-//              bankAcctComboBox.getItems().remove(tmpBook); // Always remove from bankAcctComboBoxData instead!
-                bankAcctComboBoxData.remove(tmpBook);
+//              bankAcctComboBox.getItems().remove(tmpBankAcctName); // Always remove from bankAcctComboBoxData instead!
+                bankAcctComboBoxData.remove(tmpBankAcctName);
                 enable_or_disable_buttons();
             }
+        }
+
+        // Remove all entries for the deleted Bank Acct Name from defaultProps
+        // or they will still be saved to defaultProperties file next time the
+        // settings are saved. The deleted name may not have already been saved.
+
+        Enumeration<?> enumPropertyNames = defaultProps.propertyNames();
+        String suffix = "";
+        while(enumPropertyNames.hasMoreElements())
+	{
+            String key = (String) enumPropertyNames.nextElement();
+            if (key != null && key.contains(ACCTNAME_PROP)) {
+                if (defaultProps.getProperty(key).equals(tmpBankAcctName)) {
+                    suffix = key.substring(key.indexOf(".")+1);
+                    break;
+                }
+            }
+        }
+        if (!suffix.isEmpty()) {
+            defaultProps.remove(ACCTNAME_PROP + suffix);
+            defaultProps.remove(BANKID_PROP + suffix);
+            defaultProps.remove(ACCTNO_PROP + suffix);
+            defaultProps.remove(ACCTTYPE_PROP + suffix);
+            defaultProps.remove(OFXDIR_PROP + suffix);
+            defaultProps.remove(SPLITMEMO_PROP + suffix);
         }
     }
 
@@ -200,11 +230,14 @@ public class IngAusOfxFixController  implements Initializable{
             tmpBook = (String) itr.next();
             BankAcct refBook = (BankAcct) bankAcctMap.get(tmpBook);
             suffix = String.valueOf(i++);
+            System.out.println("handleBtnActionSaveSettings: i=" + i +
+              " BankAcctName=" + refBook.getBankAcctName());
             defaultProps.setProperty(ACCTNAME_PROP + suffix, refBook.getBankAcctName());
             defaultProps.setProperty(BANKID_PROP + suffix, refBook.getBankAcctBankId());
             defaultProps.setProperty(ACCTNO_PROP + suffix, refBook.getBankAcctNo());
             defaultProps.setProperty(ACCTTYPE_PROP + suffix, refBook.getBankAcctType());
             defaultProps.setProperty(OFXDIR_PROP + suffix, refBook.getBankAcctOfxDir());
+            defaultProps.setProperty(SPLITMEMO_PROP + suffix, Boolean.toString(refBook.getBankSplitMemo()));
         }
 
         try (FileOutputStream out = new FileOutputStream(DEF_PROP)) {
@@ -249,20 +282,20 @@ public class IngAusOfxFixController  implements Initializable{
 
     @FXML
     public void handleBankAcctComboBoxOnAction(Event event) {
-        String selected;
+        String selectedAcct;
         if (bankAcctComboBox.getValue() == null) {
-            selected = "";
+            selectedAcct = "";
         } else {
-            selected = bankAcctComboBox.getValue().toString();
+            selectedAcct = bankAcctComboBox.getValue().toString();
         }
         //String editted = bankAcctComboBox.getEditor().getText();
         //System.out.println("handleBookComboBoxOnAction(): selected: " + selected
         //    + " editted=" + editted);
 
         if
-        ( ( (selected != null) && (! selected.isEmpty()))
+        ( ( (selectedAcct != null) && (! selectedAcct.isEmpty()))
           &&
-          ((bankAcctSelectionTarget.isEmpty()) || (bankAcctSelectionTarget.equals(selected)))
+          ((bankAcctSelectionTarget.isEmpty()) || (bankAcctSelectionTarget.equals(selectedAcct)))
         ) {
             // If new bankAcct (selected) already exists
             //   change to it and show related fields
@@ -270,28 +303,30 @@ public class IngAusOfxFixController  implements Initializable{
             //   add the new bankAcct instance to BankAcct class, bankAcctMap and
             //   bankAcctComboBoxData and make it the
             //   selected combobox item
-            if (bankAcctMap.containsKey(selected)) {
+            if (bankAcctMap.containsKey(selectedAcct)) {
                 // Get ref to bankAcct object from bankAcctMap
-                BankAcct bankAcct = (BankAcct) bankAcctMap.get(selected);
+                BankAcct bankAcct = (BankAcct) bankAcctMap.get(selectedAcct);
                 //bankAcctComboBox.setValue(selecteded); // set selected Value - do NOT do here - causes loop
 //                System.out.println("bankAcctComboBox.setOnAction: txtGcDatFilStr.setText to " + bankAcct.getGcDat());
                 txtBankId.setText(bankAcct.getBankAcctBankId());
                 txtAcctNo.setText(bankAcct.getBankAcctNo());
                 bankAcctTypeComboBox.setValue(bankAcct.getBankAcctType());
                 txtOfxDir.setText(bankAcct.getBankAcctOfxDir());
+                splitMemoChb.setSelected(bankAcct.getBankSplitMemo());
 //              txtOfxFile.setText("");
             } else {
                 BankAcct bankAcct = new BankAcct(
-                    selected,
+                    selectedAcct,
                     txtBankId.getText(),
                     txtAcctNo.getText(),
                     bankAcctTypeComboBox.getValue().toString(),
-                    txtOfxDir.getText());
-                bankAcctMap.put(selected, bankAcct);
+                    txtOfxDir.getText(),
+                    splitMemoChb.isSelected());
+                bankAcctMap.put(selectedAcct, bankAcct);
                 //bankAcctComboBox.setValue(selected);     // set selected Value - do NOT do here causes loop
-                bankAcctComboBoxData.add(selected);
+                bankAcctComboBoxData.add(selectedAcct);
             }
-            if (BankAcct.getDefaultBankAcct().equals(selected)) {
+            if (BankAcct.getDefaultBankAcct().equals(selectedAcct)) {
                 if (! defaultChb.isSelected()) {
                     defaultChb.setSelected(true);
                 }
@@ -345,8 +380,12 @@ public class IngAusOfxFixController  implements Initializable{
                 baNo = defaultProps.getProperty(ACCTNO_PROP + suffix);
                 baType = defaultProps.getProperty(ACCTTYPE_PROP + suffix);
                 baOfxDir = defaultProps.getProperty(OFXDIR_PROP + suffix);
+                //baSplitMemo = defaultProps.get
+                baSplitMemo = Boolean.parseBoolean(defaultProps.getProperty(
+                        SPLITMEMO_PROP + suffix));
 
-                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType, baOfxDir);
+                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType,
+                  baOfxDir, baSplitMemo);
                 bankAcctComboBoxData.add(baName);
                 bankAcctMap.put(baName, bankAcct);  // save ref to bankAcct in hashmap
 
@@ -356,12 +395,14 @@ public class IngAusOfxFixController  implements Initializable{
                     txtAcctNo.setText(baNo);
                     bankAcctTypeComboBox.setValue(baType);
                     txtOfxDir.setText(baOfxDir);
+                    splitMemoChb.setSelected(baSplitMemo);
                     defaultChb.setSelected(true);
                 }
                 //i++;
             }
             if (bankAcctComboBoxData.isEmpty()) {
-                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType, baOfxDir);
+                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType,
+                  baOfxDir, baSplitMemo);
                 bankAcctComboBoxData.add(baName);
                 bankAcctMap.put(baName, bankAcct);
             }
@@ -376,12 +417,14 @@ public class IngAusOfxFixController  implements Initializable{
             if (ex.getClass().toString().equals("class java.io.FileNotFoundException")) {
 //              System.out.println("getUserDefaults: " + ex.getMessage());
                 BankAcct.setDefaultBankAcct(baName);
-                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType, baOfxDir);
+                BankAcct bankAcct = new BankAcct(baName, baBankId, baNo, baType,
+                  baOfxDir, baSplitMemo);
                 bankAcctComboBoxData.add(baName);
                 bankAcctMap.put(baName, bankAcct);
 //              bankAcctComboBox.setItems(new SortedList<>(bankAcctComboBoxData, Collator.getInstance()));  // JDK-8087838
                 bankAcctComboBox.setItems(bankAcctComboBoxData);
                 bankAcctComboBox.setValue(baName);
+                splitMemoChb.setSelected(baSplitMemo);
                 defaultChb.setSelected(true);
             } else {
                 Logger.getLogger(IngAusOfxFixController.class.getName()).log(Level.SEVERE, null, ex);
@@ -553,7 +596,8 @@ public class IngAusOfxFixController  implements Initializable{
             "For example: MyBankAccount\n" +
             "To add a new bank account name:\n" +
             " Type the new bank account name in this combobox, then press ENTER,\n"  +
-            " then change the other fields (Bank Id, Account No, Account Type and Ofx Directory).\n" +
+            " then change the other fields (Bank Id, Account No, Account Type," +
+            " Ofx Directory and Split Memo).\n" +
             "Use the Save Settings button to save the settings for all bank accounts."
         ));
 
@@ -576,7 +620,16 @@ public class IngAusOfxFixController  implements Initializable{
 
         txtOfxDir.setTooltip(new Tooltip(
             "OFX Directory:\n" +
-            "The directory for the OFX data files for this bank account.\n"
+            "The directory for the OFX data files for this bank account."
+        ));
+
+        splitMemoChb.setTooltip(new Tooltip(
+            "Split Memo: If checked and <NAME> is unused, and <MEMO> contains " +
+            "space-space:\n" +
+            "Text from <MEMO> before the first space-space is moved to <NAME>\n" +
+            " which GnuCash imports into Transaction Description\n" +
+            "Text from <MEMO> after the first space-space becomes the new <MEMO>\n" +
+            " which GnuCash imports into Memo of the bank account split."
         ));
 
         txtOfxFile.setTooltip(new Tooltip(
@@ -608,7 +661,7 @@ public class IngAusOfxFixController  implements Initializable{
     void enable_or_disable_buttons() {
 //        System.out.println("Start enable_or_disable_buttons" +
 //            " bankAcctComboBox.getValue()=" + bankAcctComboBox.getValue() +
-//            " txtGcDatFilStr.getText()=" + txtGcDatFilStr.getText());
+//            " txtOfxDir.getText()=" + txtOfxDir.getText());
 
         boolean boolBankAcctOK = false;
         boolean boolBankIdOk = false;
@@ -727,17 +780,22 @@ public class IngAusOfxFixController  implements Initializable{
                 bankAcct.setBankAcctNo(txtAcctNo.getText());
                 bankAcct.setBankAcctType(bankAcctTypeComboBox.getValue().toString());
                 bankAcct.setBankAcctDir(txtOfxDir.getText());
+                bankAcct.setBankSplitMemo(splitMemoChb.isSelected());
 //                System.out.println("enable_or_disable:"
 //                    + "set bankAcct=" + bankAcctComboBox.getValue()
 //                    + " BankId=" + txtBankId.getText()
 //                    + " AcctNo=" + txtAcctNo.getText()
-//                    + " Type=" + bankAcctTypeComboBox.getValue());
+//                    + " Type=" + bankAcctTypeComboBox.getValue()
+//                    + " OfxDir=" + txtOfxDir.getText()
+//                    + " splitMemo=" + splitMemoChb.isSelected()
+//                );
             } else {
                 BankAcct bankAcct = new BankAcct(bankAcctComboBox.getValue().toString(),
                                      txtBankId.getText(),
                                      txtAcctNo.getText(),
                                      bankAcctTypeComboBox.getValue().toString(),
-                                     txtOfxDir.getText());
+                                     txtOfxDir.getText(),
+                                     splitMemoChb.isSelected());
                 bankAcctMap.put(bankAcctComboBox.getValue(), bankAcct);
                 bankAcctComboBoxData.add(bankAcctComboBox.getValue().toString());
             }
@@ -825,7 +883,8 @@ public class IngAusOfxFixController  implements Initializable{
         <DTPOSTED>20160630000000
         <TRNAMT>5.23
         <FITID>903889                                       MUST BE UNIQUE
-        <MEMO>Bonus Interest Credit - Receipt 903889
+        <NAME>Transaction Description                   <NAME> NOT output by ING, only IngAusOfxFix
+        <MEMO>Bonus Interest Credit - Receipt 903889    <MEMO> goes to Memo split of the imported Acct
         </STMTTRN>
         <STMTTRN>                                   Start of 2nd Transaction
         <TRNTYPE>CREDIT
@@ -839,6 +898,10 @@ public class IngAusOfxFixController  implements Initializable{
         </STMTTRNRS>
         </BANKMSGSRSV1>
         </OFX>
+
+        If Transaction has no <NAME>, GnuCash import puts <MEMO> in both
+          Transaction Description and
+          Memo in the split for the imported Acct
     */
 
     @FXML
@@ -852,6 +915,8 @@ public class IngAusOfxFixController  implements Initializable{
         String dtPosted = "";
         String trnAmt = "";
         String fitId = "";
+        String nameStr = "";
+        Integer index = 0;
         final String bankAcctFromElement = "<BANKACCTFROM>" + LINE_SEPARATOR
             + "<BANKID>" + txtBankId.getText() + LINE_SEPARATOR
             + "<ACCTID>" + txtAcctNo.getText() + LINE_SEPARATOR
@@ -897,6 +962,7 @@ public class IngAusOfxFixController  implements Initializable{
                     dtPosted = "";
                     trnAmt = "";
                     fitId = "";
+                    nameStr = "";
                     boolTrnDateInRange = false;
                     continue; // don't write until we have checked date within range
                 }
@@ -909,7 +975,7 @@ public class IngAusOfxFixController  implements Initializable{
                             // DTPOSTED is yyyymmddhhmmss
                             //  (hhmmss is zeroes for ING Australia)
                             dtPosted = line.substring(10, 18);   // get yyyymmdd
-        //                              System.out.println("handleBtnActionStart(): dtPosted=" + dtPosted);
+        //                    System.out.println("handleBtnActionStart(): dtPosted=" + dtPosted);
                             if (dtPosted.matches("\\d\\d\\d\\d\\d\\d\\d\\d")) {
                                 if ((dtPosted.compareTo(txtDateFrom.getText()) >= 0)
                                 &&  (dtPosted.compareTo(txtDateTo.getText()) <= 0)) {
@@ -920,7 +986,7 @@ public class IngAusOfxFixController  implements Initializable{
                                     transOut++;
                                 } else {
                                     transDrop++;
-                                    continue;
+                                    continue;   // read next line
                                 }
                             } else {
                                 taLog.appendText("Invalid DTPOSTED - transaction dropped: " + line + "\n");
@@ -948,22 +1014,41 @@ public class IngAusOfxFixController  implements Initializable{
                                         continue;
                                     }
                                 } else {
-                                    if (line.startsWith("<MEMO>")) {
+                                    if (line.startsWith("<NAME>")) {
                                         if (!boolTrnDateInRange) {
                                             continue;
                                         }
-                                        // Change bad tag <BR/> to a space
-                                        line = line.replaceAll("<BR/>", " ");
+                                        nameStr = line;
                                     } else {
-                                        if (line.startsWith("</STMTTRN>")) {
-                                            boolInTransaction = false;
+                                        if (line.startsWith("<MEMO>")) {
                                             if (!boolTrnDateInRange) {
                                                 continue;
                                             }
+                                            // Change bad tag <BR/> to a space
+                                            line = line.replaceAll("<BR/>", " ");
+                                            // If Split Memo checkbox is ticked:
+                                            //    optionally Split MEMO into NAME & MEMO
+                                            index = line.indexOf(" - ");
+                                            if (nameStr.isEmpty() && index > -1
+                                            &&  splitMemoChb.isSelected()) {
+                                                nameStr = "<NAME>" + line.substring(6, index);
+                                                writer.write(nameStr + LINE_SEPARATOR);
+                                                if (line.length() > (index+2))
+                                                {
+                                                    line = "<MEMO>" + line.substring(index+3);
+                                                }
+                                            }
                                         } else {
-                                            taLog.appendText("Unknown record type within STMTTRN: " + line + "\n");
-                                            if (!boolTrnDateInRange) {
-                                                continue;
+                                            if (line.startsWith("</STMTTRN>")) {
+                                                boolInTransaction = false;
+                                                if (!boolTrnDateInRange) {
+                                                    continue;
+                                                }
+                                            } else {
+                                                taLog.appendText("Unknown record type within STMTTRN: " + line + "\n");
+                                                if (!boolTrnDateInRange) {
+                                                    continue;
+                                                }
                                             }
                                         }
                                     }
@@ -1219,6 +1304,17 @@ public class IngAusOfxFixController  implements Initializable{
             }
         });
 
+        // handle changes to splitMemoChb when it looses focus so that a new value
+        //  is updated into BankAcct.bankSplitMemo
+        splitMemoChb.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean wasFocused, Boolean isNowFocused) -> {
+              System.out.println("splitMemoChb.focusedProperty has changed" +
+                  " oldVal=" + wasFocused + " newVal=" + isNowFocused + " o=" + o);
+            if (wasFocused) {
+                // has just lost focus
+                enable_or_disable_buttons();
+            }
+        });
+
         // handle changes to txtOfxFile when it looses focus
         txtOfxFile.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean wasFocused, Boolean isNowFocused) -> {
 //              System.out.println("txtOfxFile.focusedProperty has changed" +
@@ -1268,7 +1364,5 @@ public class IngAusOfxFixController  implements Initializable{
             enable_or_disable_buttons();
         }
     }
-    
-    
-    
+
 }

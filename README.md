@@ -1,4 +1,4 @@
-#          IngAusOfxFix V#2.00 28 Jul 2019 README.md file.
+#          IngAusOfxFix V#2.01 10 Mar 2020 README.md file.
 
 ING Australia OFX Fix for Windows (using JavaFX) or Linux (using OpenJFX)
 
@@ -10,7 +10,7 @@ The last known IngAusOfxFix stable series is
 |Java Version | IngAusOfxFix Stable Series  |
 |---          | ---                         |
 | 8           | 1.01                        |
-| 11          | 2.00                        |
+| 11          | 2.01                        |
 
 Please see:
   - ChangeLog.txt for release details
@@ -38,7 +38,7 @@ IngAusOfxFix is an application to automate the repetitive task of editing
 the file of bank transactions downloaded in OFX format from bank ING Australia
 so that they may be imported into GnuCash.
 
-This application corrects 2 problems in the downloaded .ofx file:
+This application corrects 3 problems in the downloaded .ofx file:
   1. Add missing BANKACCTFROM xml entity before BANKTRANLIST.
      This is needed because GnuCash doesn't find any transactions to
      import without this.
@@ -48,6 +48,8 @@ This application corrects 2 problems in the downloaded .ofx file:
      This is needed because FITID's are supposed to be unique for every
      transaction within each bank account and GnuCash will treat
      transactions with duplicate FITID's as already imported.
+  3. Replace bad tag `<BR/>` in `<MEMO>` with a space as it causes an empty
+     transaction Description when imported into GnuCash.
 
 This application is written in Java using JavaFX (or OpenJFX) for
 the graphical user interface. Java versions before 8 cannot be used with this
@@ -143,11 +145,38 @@ problems as it checks that
      The directory you store your downloaded OFX data files for this bank
      account. This can either be typed in or selected using the **Browse**
      button.
+  6. **Split Memo**.
+     Split Memo fields into Name and Memo if they contain " - "
+    (space-dash-space). Default is `true` (ticked).
+
+     In OFX files as exported from ING Australia, each transaction contains only a
+     `<MEMO>` field but no `<NAME>` field. If GnuCash imports such a transaction,
+     it loads the MEMO data into both transaction Description, and Memo for the
+     the bank account split.
+     If this checkbox is ticked, and there is no `<NAME>` field in the
+     transaction, and `<MEMO>` contains at least 1 " - ", IngAusOfxFix will output
+     text before the first " - " into `<NAME>` and text after the first " - " into
+     `<MEMO>`. GnuCash will then load `<NAME>` into transaction Description and
+     `<MEMO>` into Memo for the bank account split. As well as making the display
+     of transaction registers clearer and removing duplicated text, using this
+     option should help bayesian matching find the correct matching account.
+
+     For example:
+
+     Input
+     ```
+     <MEMO>ABC CO - EFTPOS Purchase - Receipt 83109 - Cash amount $20.00
+     ```
+     Output
+     ```
+     <NAME>ABC CO
+     <MEMO>EFTPOS Purchase - Receipt 83109 - Cash amount $20.00
+     ```
 
   After valid entry of account name, account id, account no, account type and
   OFX directory, the **Save Settings** button will be enabled, which when
-  clicked, will save these entries, and the name of the default bank
-  account, for all bank accounts, in file
+  clicked, will save these entries, the name of the default bank account and the
+  value of Split Memo, for all bank accounts, in file
   ```
     GNU/Linux: /home/[USER_NAME]/.IngAusOfxFix/defaultProperties
     Windows: C:\Users\USER_NAME]\.IngAusOfxFix/defaultProperties
