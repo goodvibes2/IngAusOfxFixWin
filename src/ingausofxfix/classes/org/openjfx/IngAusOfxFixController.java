@@ -134,7 +134,7 @@ public class IngAusOfxFixController  implements Initializable{
     private static boolean baSplitMemo = true;          // initial default SplitMemo
 
     private static Path pathOfxDirFilStr;
-    private final Charset CHAR_SET = Charset.forName("US-ASCII");
+    private final Charset CHAR_SET = Charset.forName("UTF-8");
 
     // Saved Settings
     private static final String DEFAULT_PROP = "defaultBankAcct";
@@ -836,6 +836,11 @@ public class IngAusOfxFixController  implements Initializable{
      *      This is because FITID's are supposed to be unique for every
      *      transaction within each bank account and GnuCash will treat
      *      transactions with duplicate FITID's as already imported.
+     *  3. change ENCODING:USASCII to ENCODING:UTF-8
+     *        and CHARSET:1252     to CHARSET:NONE
+     *      so that any input UTF-8 non ascii characters do not cause error
+     *    IOException: java.nio.charset.MalformedInputException: Input length = 1
+     *      and are written out unchanged.
      *
      * @author cgood
      * @param e
@@ -847,8 +852,8 @@ public class IngAusOfxFixController  implements Initializable{
         DATA:OFXSGML
         VERSION:102
         SECURITY:NONE
-        ENCODING:USASCII
-        CHARSET:1252
+        ENCODING:USASCII                change to ENCODING:UTF-8
+        CHARSET:1252                    change to CHARSET:NONE
         COMPRESSION:NONE
         OLDFILEUID:NONE
         NEWFILEUID:NONE
@@ -943,6 +948,12 @@ public class IngAusOfxFixController  implements Initializable{
                 // note line termination chars have been stripped by readLine()
 //                System.out.println("Line read: " + line);
                 linesIn++;
+                if (line.equals("ENCODING:USASCII")) {
+                    line = "ENCODING:UTF-8";
+                }
+                if (line.equals("CHARSET:1252")) {
+                    line = "CHARSET:NONE";
+                }
                 if (line.startsWith("<BANKACCTFROM>")) {
                     boolBankAcctFrom_found = true;
                 }

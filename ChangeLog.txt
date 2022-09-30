@@ -1,4 +1,17 @@
-IngAusOfxFix
+IngAusOfxFix ChangeLog.txt
+
+V# 2.02 29 Sep 2022 Chris Good
+
+    * Issue 3: Cater for UTF-8 characters in input file.
+      See Issue https://github.com/goodvibes2/IngAusOfxFixWin/issues/3.
+      The input file, as downloaded from ING Australia, *is* a UTF-8 file.
+      Open the input and output files with CHAR_SET UTF-8 instead of US-ASCII.
+      This is to fix IngAusOfxFix crashing with error message
+        IOException: java.nio.charset.MalformedInputException: Input length = 1
+      when it finds a non-ascii UTF-8 character in the input file.
+      ENCODING:USASCII & CHARSET:1252 in input file are also changed to
+      ENCODING:UTF-8   & CHARSET:NONE respectively in the output file.
+      This is to allow UTF-8 characters to be imported into GnuCash.
 
 V# 2.01 10 Mar 2020 Chris Good
 
@@ -15,8 +28,8 @@ V# 2.00 28 Jul 2019 Chris Good
 
 V# 1.01 03 Aug 2016 Chris Good
 
-    * Fix Missing carriage returns in BANKACCTFROM xml entity for Windows
+    * Fix Missing carriage returns in BANKACCTFROM xml entity for Windows.
 
 V# 1.00 21 Jul 2016 Chris Good
 
-    * Initial release
+    * Initial release.

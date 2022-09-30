@@ -1,4 +1,4 @@
-#          IngAusOfxFix V#2.01 10 Mar 2020 README.md file.
+#          IngAusOfxFix V#2.02 29 Sep 2022 README.md file.
 
 ING Australia OFX Fix for Windows (using JavaFX) or Linux (using OpenJFX)
 
@@ -10,7 +10,7 @@ The last known IngAusOfxFix stable series is
 |Java Version | IngAusOfxFix Stable Series  |
 |---          | ---                         |
 | 8           | 1.01                        |
-| 11          | 2.01                        |
+| 11          | 2.02                        |
 
 Please see:
   - ChangeLog.txt for release details
@@ -38,7 +38,7 @@ IngAusOfxFix is an application to automate the repetitive task of editing
 the file of bank transactions downloaded in OFX format from bank ING Australia
 so that they may be imported into GnuCash.
 
-This application corrects 3 problems in the downloaded .ofx file:
+This application corrects 4 problems in the downloaded .ofx file:
   1. Add missing BANKACCTFROM xml entity before BANKTRANLIST.
      This is needed because GnuCash doesn't find any transactions to
      import without this.
@@ -50,6 +50,13 @@ This application corrects 3 problems in the downloaded .ofx file:
      transactions with duplicate FITID's as already imported.
   3. Replace bad tag `<BR/>` in `<MEMO>` with a space as it causes an empty
      transaction Description when imported into GnuCash.
+  4. Allow UTF-8 characters in the input file to be imported into GnuCash.
+     **ENCODING:USASCII** & **CHARSET:1252** in input file are changed to
+     **ENCODING:UTF-8**   & **CHARSET:NONE** respectively in the output file.
+     Note that (from my limited testing) non-ascii UTF-8 characters are
+     imported correctly into GnuCash in Linux, but some are dropped or
+     incorrectly translated when importing into GnuCash in MS Windows.
+     See Issue https://github.com/goodvibes2/IngAusOfxFixWin/issues/3.
 
 This application is written in Java using JavaFX (or OpenJFX) for
 the graphical user interface. Java versions before 8 cannot be used with this
@@ -217,10 +224,13 @@ IngAusOfxFix V1.x runs in Java 8.
 
 IngAusOfxFix V2.x runs in Java 11.
 
-IngAusOfxFix versions 1.x and 2.x have the same functionality. Currently (Sep
-2019), the only difference is the version of Java they run in. Note that as Java
-8 is no longer being developed, future IngAusOfxFix enhancements may not be
-included in V1.x.
+IngAusOfxFix versions 1.x and 2.x have almost the same functionality. Currently
+(Sep 2022), the only differences are
+  1. the version of Java they run in
+  2. V1.x does not include the mods for handling UTF-8 characters made in V2.02.
+
+Note that as Java 8 is no longer being developed, future IngAusOfxFix enhancements
+may not be included in V1.x.
 
 **Definition**
 
